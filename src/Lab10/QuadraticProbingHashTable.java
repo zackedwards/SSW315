@@ -60,6 +60,23 @@ public class QuadraticProbingHashTable
             rehash( ); //then just rehash the numbers!
         }
     }
+    
+    public void insert( String x )
+    {
+            // Insert x as active
+        int currentPos = findPos( x ); //hash the input number and find where it should go
+        
+        if( isActive( currentPos ) ) { //checks to see if number is already in that spot
+            return;
+        }
+
+        array[ currentPos ] = new HashEntry( new MyInteger(currentPos), true ); //fills the value into the position
+
+            // Rehash; see Section 5.5
+        if( ++currentSize > array.length / 2 ) {//if the size of the array approaches the hash table size
+            rehash( ); //then just rehash the numbers!
+        }
+    }
 
     /**
      * Expand the hash table.
@@ -106,7 +123,24 @@ public class QuadraticProbingHashTable
 /* 6*/              currentPos -= array.length;
 				}
         	}
-			count+= collisionNum + 1;
+			count = count + collisionNum + 1;
+/* 7*/      return currentPos;
+    }
+    
+    private int findPos( String x )
+    {
+/* 1*/      int collisionNum = 0;
+/* 2*/      int currentPos = QuadraticProbingHashTable.hash(x, 59023);
+
+/* 3*/      while( array[ currentPos ] != null &&
+                !array[ currentPos ].element.equals( new MyInteger(QuadraticProbingHashTable.hash(x, 59023))) )
+        	{
+/* 4*/          currentPos += 2 * ++collisionNum - 1;  // Compute ith probe
+/* 5*/          if( currentPos >= array.length ) {      // Implement the mod
+/* 6*/              currentPos -= array.length;
+				}
+        	}
+			count = count + collisionNum + 1;
 /* 7*/      return currentPos;
     }
 
@@ -185,7 +219,7 @@ public class QuadraticProbingHashTable
         /** The array of elements. */
     private HashEntry [ ] array;   // The array of elements
     private int currentSize;
-    public int count = 0;// The number of occupied cells
+    public int count;// The number of occupied cells
 
     /**
      * Internal method to allocate array.
