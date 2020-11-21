@@ -131,9 +131,10 @@ public class QuadraticProbingHashTable
     {
 /* 1*/      int collisionNum = 0;
 /* 2*/      int currentPos = QuadraticProbingHashTable.hash(x, 59023);
+			MyInteger test = new MyInteger(QuadraticProbingHashTable.hash(x, 59023));
 
 /* 3*/      while( array[ currentPos ] != null &&
-                !array[ currentPos ].element.equals( new MyInteger(QuadraticProbingHashTable.hash(x, 59023))) )
+                !test.equals( array[ currentPos ].element ))
         	{
 /* 4*/          currentPos += 2 * ++collisionNum - 1;  // Compute ith probe
 /* 5*/          if( currentPos >= array.length ) {      // Implement the mod
