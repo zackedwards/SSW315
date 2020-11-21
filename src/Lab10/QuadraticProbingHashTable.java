@@ -70,7 +70,7 @@ public class QuadraticProbingHashTable
             return;
         }
 
-        array[ currentPos ] = new HashEntry( new MyInteger(currentPos), true ); //fills the value into the position
+        array[ currentPos ] = new HashEntry( x, true ); //fills the value into the position
 
             // Rehash; see Section 5.5
         if( ++currentSize > array.length / 2 ) {//if the size of the array approaches the hash table size
@@ -131,10 +131,9 @@ public class QuadraticProbingHashTable
     {
 /* 1*/      int collisionNum = 0;
 /* 2*/      int currentPos = QuadraticProbingHashTable.hash(x, 59023);
-			MyInteger test = new MyInteger(QuadraticProbingHashTable.hash(x, 59023));
 
 /* 3*/      while( array[ currentPos ] != null &&
-                !test.equals( array[ currentPos ].element ))
+                x.compareTo( array[ currentPos ].str_value) != 0)
         	{
 /* 4*/          currentPos += 2 * ++collisionNum - 1;  // Compute ith probe
 /* 5*/          if( currentPos >= array.length ) {      // Implement the mod

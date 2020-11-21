@@ -6,6 +6,7 @@ class HashEntry
 {
     Hashable element;   // the element
     boolean  isActive;  // false is deleted
+    String str_value;
 
     public HashEntry( Hashable e )
     {
@@ -16,5 +17,9 @@ class HashEntry
     {
         element   = e;
         isActive  = i;
+    }
+    public HashEntry( String e, boolean i) {
+    	str_value= e;
+    	isActive  = i;
     }
 }
