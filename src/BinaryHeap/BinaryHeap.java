@@ -1,7 +1,5 @@
 
-package binaryheap;
-
-package lab10;
+package BinaryHeap;
 
 import static org.junit.Assert.assertTrue;
 
