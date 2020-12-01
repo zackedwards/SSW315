@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class hw5_part1 {
+public class hw5_part2 {
 
 	public static void insert(Float x, PriorityQueue<Float> list) {
 		System.out.println(" ");
@@ -89,16 +89,21 @@ public class hw5_part1 {
 		//Scanning in the elements
 		Scanner s = new Scanner(new FileReader("hw5_elements.txt"));
 		
-		//a queue for the boxes to be inserted
+		//a queue for the boxes to be inserted which prioritizes the max
 		PriorityQueue<Float> box_list = new PriorityQueue<Float>(Comparator.reverseOrder());
 
-		
-		//inserting the elements into the boxes
+		//creating a priority queue for the elements which prioritizes the max
+		PriorityQueue<Float> pq = new PriorityQueue<Float>(Comparator.reverseOrder());
+
+		//inserting the elements into the priority queue
 		while(s.hasNext()) {
-			//scanning the next line
 			Float element = Float.parseFloat(s.nextLine());
-			//calling the insert method
-			insert(element, box_list);
+			pq.add(element);
+		}
+
+		while(!pq.isEmpty()){
+			//inserting the elements from the priority queue one by one
+			insert(pq.poll(), box_list);
 			System.out.println(summary(box_list));
 		}
 		
