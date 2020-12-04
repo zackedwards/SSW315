@@ -61,22 +61,6 @@ public class QuadraticProbingHashTable
         }
     }
     
-    public void insert( String x )
-    {
-            // Insert x as active
-        int currentPos = findPos( x ); //hash the input number and find where it should go
-        
-        if( isActive( currentPos ) ) { //checks to see if number is already in that spot
-            return;
-        }
-
-        array[ currentPos ] = new HashEntry( x, true ); //fills the value into the position
-
-            // Rehash; see Section 5.5
-        if( ++currentSize > array.length / 2 ) {//if the size of the array approaches the hash table size
-            rehash( ); //then just rehash the numbers!
-        }
-    }
 
     /**
      * Expand the hash table.
@@ -90,7 +74,7 @@ public class QuadraticProbingHashTable
         currentSize = 0;
         
         int i = 0;
-        while(i < oldArray.length) { //this loop copies the array
+        while(i < oldArray.length) { //evaluates each index of the array
         	if( oldArray[ i ] != null && oldArray[ i ].isActive ) { //if it existed in the old array...
                 insert( oldArray[ i ].element ); //insert it into the new array!!
             }
@@ -110,39 +94,26 @@ public class QuadraticProbingHashTable
      * @param x the item to search for.
      * @return the position where the search terminates.
      */
-    private int findPos( Hashable x )
+    private int findPos( Hashable x ) //called in the insert to find the position for the entry
     {
-/* 1*/      int collisionNum = 0;
-/* 2*/      int currentPos = x.hash( array.length );
-
-/* 3*/      while( array[ currentPos ] != null &&
-                !array[ currentPos ].element.equals( x ) )
+/* 1*/      int collisionNum = 0; //creating a variable for collisions
+/* 2*/      int currentPos = x.hash( array.length ); //hashing the entry according to the array size
+			
+			//break if the position being evaluated isn't null			
+			//break if the element at the position equals the insert variable
+/* 3*/      while( array[ currentPos ] != null && 
+                !array[ currentPos ].element.equals( x ) ) 
         	{
 /* 4*/          currentPos += 2 * ++collisionNum - 1;  // Compute ith probe
+				//evaluates if the currentPos is greater than the array length
 /* 5*/          if( currentPos >= array.length ) {      // Implement the mod
 /* 6*/              currentPos -= array.length;
 				}
         	}
-			count = count + collisionNum + 1;
-/* 7*/      return currentPos;
+			count = count + collisionNum + 1; //count the amount of collisions
+/* 7*/      return currentPos; //return the positions for the node to be inserted at
     }
     
-    private int findPos( String x )
-    {
-/* 1*/      int collisionNum = 0;
-/* 2*/      int currentPos = QuadraticProbingHashTable.hash(x, 59023);
-
-/* 3*/      while( array[ currentPos ] != null &&
-                x.compareTo( array[ currentPos ].str_value) != 0)
-        	{
-/* 4*/          currentPos += 2 * ++collisionNum - 1;  // Compute ith probe
-/* 5*/          if( currentPos >= array.length ) {      // Implement the mod
-/* 6*/              currentPos -= array.length;
-				}
-        	}
-			count = count + collisionNum + 1;
-/* 7*/      return currentPos;
-    }
 
     /**
      * Remove from the hash table.
@@ -150,9 +121,9 @@ public class QuadraticProbingHashTable
      */
     public void remove( Hashable x )
     {
-        int currentPos = findPos( x );
-        if( isActive( currentPos ) ) {
-            array[ currentPos ].isActive = false;
+        int currentPos = findPos( x ); //find the position of x
+        if( isActive( currentPos ) ) {  //if the node is filled
+            array[ currentPos ].isActive = false; //then remove it
         }
     }
 
@@ -163,9 +134,9 @@ public class QuadraticProbingHashTable
      */
     public Hashable find( Hashable x )
     {
-        int currentPos = findPos( x );
-        if(isActive( currentPos )) {
-        	return array[currentPos].element;
+        int currentPos = findPos( x ); //find the position of x
+        if(isActive( currentPos )) {//if the position is active
+        	return array[currentPos].element; //then return the value
         }
         else {
         	return null;
@@ -180,6 +151,7 @@ public class QuadraticProbingHashTable
      */
     private boolean isActive( int currentPos )
     {
+    	//checks to see if the node at the position is active
         return array[ currentPos ] != null && array[ currentPos ].isActive;
     }
 
@@ -188,9 +160,9 @@ public class QuadraticProbingHashTable
      */
     public void makeEmpty( )
     {
-        currentSize = 0;
-        for( int i = 0; i < array.length; i++ ) {
-            array[ i ] = null;
+        currentSize = 0; //sets the currentSize variable to 0
+        for( int i = 0; i < array.length; i++ ) { //examines each item in the array
+            array[ i ] = null; //and sets each node to null
         }
     }
 
@@ -204,10 +176,12 @@ public class QuadraticProbingHashTable
     {
         int hashVal = 0;
 
-        for( int i = 0; i < key.length( ); i++ ) {
-            hashVal = 37 * hashVal + key.charAt( i );
+        for( int i = 0; i < key.length( ); i++ ) { //for each character in the string
+            hashVal = 37 * hashVal + key.charAt( i ); //turns the string into a number
         }
-        hashVal %= tableSize;
+        hashVal %= tableSize; //modulus tableSize is the hash function
+        
+        //makes sure the hash value isn't negative
         if( hashVal < 0 ) {
             hashVal += tableSize;
         }
@@ -237,10 +211,12 @@ public class QuadraticProbingHashTable
      */
     private static int nextPrime( int n )
     {
+    	//checks to see if N is divisible by 2
         if( n % 2 == 0 ) {
             n++;
         }
         
+        //while n isn't a prime number, add two and check again
         while(!isPrime( n )) {
         	n += 2;
         }
@@ -259,15 +235,20 @@ public class QuadraticProbingHashTable
      */
     private static boolean isPrime( int n )
     {
+    	//checks to see if b is 2 or 3
         if( n == 2 || n == 3 ) {
             return true;
         }
 
+        //checks to see if n is 1, or if it is divisible by 2
         if( n == 1 || n % 2 == 0 ) {
             return false;
         }
         int i = 3;
+        
+        //checks to see if i*i is less than or equal to n
         while(i * i <= n) {
+        	//if n is divisible by i then the number is not a prime
         	if( n % i == 0 ) {
         		return false;
         	}

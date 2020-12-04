@@ -8,22 +8,22 @@ public class driver_step4 {
 
 	public static void main(String args[]) throws IOException {
 		//importing the text files into hash tables
-		QuadraticProbingHashTable dictionary = new QuadraticProbingHashTable(59023);
+		QuadraticProbingHashTable dictionary = new QuadraticProbingHashTable( 2 * 45402);
 		Scanner s = new Scanner(new FileReader("linuxwords.txt"));
 		while(s.hasNext()) {
-			dictionary.insert(s.nextLine());
+			dictionary.insert(new MyString(s.nextLine()));
 		}
 		
-		QuadraticProbingHashTable hbFinn = new QuadraticProbingHashTable(59023);
+		QuadraticProbingHashTable hbFinn = new QuadraticProbingHashTable(2 * 45402);
 		Scanner s2 = new Scanner(new FileReader("huckleberry_short.txt"));
 		while(s2.hasNext()) {
-			hbFinn.insert(new MyInteger(QuadraticProbingHashTable.hash(s2.nextLine(), 59023)));
+			hbFinn.insert(new MyString(s2.nextLine()));
 		}
 		
-		QuadraticProbingHashTable dict_random = new QuadraticProbingHashTable(59023);
+		QuadraticProbingHashTable dict_random = new QuadraticProbingHashTable(2 * 45402);
 		Scanner s3 = new Scanner(new FileReader("linuxwords_rand.txt"));
 		while(s3.hasNext()) {
-			dict_random.insert(new MyInteger(QuadraticProbingHashTable.hash(s3.nextLine(), 59023)));
+			dict_random.insert(new MyString(s3.nextLine()));
 		}
 		System.out.println("Number of probes in the dictionary: " + dictionary.count);
 		System.out.println("Number of probes in Huckleberry Finn: " + hbFinn.count);
@@ -35,6 +35,9 @@ public class driver_step4 {
 		System.out.println("Average Number of probes in the dictionary: " + avg1);
 		System.out.println("Average Number of probes in Huckleberry Finn: " + avg2);
 		System.out.println("Average Number of probes in the randomized dictionary: " + avg3);
+		s.close();
+		s2.close();
+		s3.close();
 	}
 	
 }

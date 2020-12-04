@@ -36,16 +36,16 @@ class QPHT_test {
 		System.out.println("Number of probes: " + H.count);
 		
 		QuadraticProbingHashTable T = new QuadraticProbingHashTable(23);
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("A", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("W", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("X", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("Y", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("CM", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("CK", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("BD", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("H", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("MOB", 23)));
-		T.insert(new MyInteger(QuadraticProbingHashTable.hash("BD", 23)));
+		T.insert(new MyString("A"));
+		T.insert(new MyString("W"));
+		T.insert(new MyString("X"));
+		T.insert(new MyString("Y"));
+		T.insert(new MyString("CM"));
+		T.insert(new MyString("CK"));
+		T.insert(new MyString("BD"));
+		T.insert(new MyString("H"));
+		T.insert(new MyString("MOB"));
+		T.insert(new MyString("BD"));
 		System.out.println("Number of probes: " + T.count);
 	}
 
