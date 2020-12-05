@@ -62,6 +62,8 @@ public class QuicksortLab {
 		if (backSize > 1) {
 			quicksort(frontSize + 1 + from, frontSize + from + backSize);
 		}
+		
+		//the following is the skeleton code i replaced from step 2
 //   Vector leftPartition = new Vector();
 //   Vector rightPartition = new Vector();
 //   
